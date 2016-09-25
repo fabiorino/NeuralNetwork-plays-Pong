@@ -1,9 +1,5 @@
 # Neural Network plays Pong
-<<<<<<< HEAD
-This is my first approach to Neural Networks (and AI more generally). I have created a clone of Atari Pong and a simple **N**eural **N**etwork with a genetic algorithm that learns how to play it.
-=======
 This is my first approach to Neural Networks (and AI more generally). I have created a clone of Atari Pong and a simple **N**eural **N**etwork that learns how to play it.
->>>>>>> origin/master
 
 ![ScreenShot](http://i.imgur.com/e8b6W65.png)
 
