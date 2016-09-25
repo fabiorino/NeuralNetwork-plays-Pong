@@ -66,6 +66,5 @@ There are **two inputs**:
 3. Technically, there is a third input: the bias. It is always equal to one.
 
 There is only **one output**. The output value is a number between zero and one.
-<br />
 * If output <= 0.5, the paddle will go down.
 * If output > 0.5, the paddle will go up.
