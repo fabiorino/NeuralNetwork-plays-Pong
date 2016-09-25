@@ -38,7 +38,7 @@ I have used Netbeans to compile the whole project. [Download Netbeans](https://n
 **NeuralNetwork**
 * `NeuralNetwork.java`: the heart of the whole project. I will explain how the Neural Network works later in this documentation.
 * `SaveLoad.java`: it saves/loads the file `synapses.txt`.
-* `LiveView.java`: it renders the neural network live view. It generates the JFrame and all the components dynamically.
+* `LiveView.java`: it renders the neural network live view. It generates the JFrame and all the components dynamically. The red neurons are the inputs and the outputs. The yellow neurons are the hidden layers.
 
 ## How the Neural Network works
 ### Genetic algorithm
