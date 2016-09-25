@@ -45,12 +45,15 @@ I have used Netbeans to compile the whole project. [Download Netbeans](https://n
 The Neural Network will start with completely random synapses. This will inevitably lead to not score any points. When a game over happens, a new genome will be tested. When all the genomes of the current generation are tested, a new generation will be created:
 
 **If none of the genomes scored a point**
+<br />
 A new generation will be created completely randomly.
 
 **If one genome scored a point**
+<br />
 A new generation will be created by mixing random synapses values with the values of the genome that scored a point.
 
 **If more than a genome scored a point**
+<br />
  A new generation will be created by mixing the best genome with the others. Nevertheless, random synapses values are still generated.
 
 ### Inputs and Outputs
