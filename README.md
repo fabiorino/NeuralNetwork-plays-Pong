@@ -15,7 +15,8 @@ If you have never worked with Neural Networks before, I would really suggest wat
 The neural network controls the left paddle. You can control the right paddle or let the computer play for you (it will never fail; this is useful to train the Neural Network while you do something else).
 
 ### Controls
-**Spacebar**: enables/disables auto play for the right paddle
+**Spacebar**: enables/disables auto play for the right paddle.
+<br />
 **Up/Down arrows**: If auto play is disabled, use these arrows to control the right paddle.
 
 ### synapses.txt
