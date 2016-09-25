@@ -58,10 +58,12 @@ A new generation will be created by mixing random synapses values with the value
 
 ### Inputs and Outputs
 There are **two inputs**:
+<br />
 1. The y coordinate of the left paddle.
 2. The y coordinate of the ball.
 3. Technically, there is a third input: the bias. It is always equal to one.
 
 There is only **one output**. The output value is a number between zero and one.
+<br />
 * If output <= 0.5, the paddle will go down.
 * If output > 0.5, the paddle will go up.
