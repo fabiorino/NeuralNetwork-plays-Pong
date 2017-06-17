@@ -8,29 +8,26 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class SaveLoad {
-    NeuralNetwork nn;
+    private final NeuralNetwork nn;
     
-    String file_name = "synapses.txt";
-    File file = new File(file_name);
+    private final String file_name = "synapses.txt";
+    private final File file = new File(file_name);
     
-    boolean first_line = true;
-    
-    int i, j, k, l, m, n;
+    private boolean first_line = true;
     
     public SaveLoad(NeuralNetwork nn) {
         this.nn = nn;
     }
     
-    public boolean fileExists() {        
+    protected boolean fileExists() {        
         return file.exists() && ! file.isDirectory();
     }
     
-    public void saveToFile() throws FileNotFoundException, UnsupportedEncodingException {
+    protected void saveToFile() throws FileNotFoundException, UnsupportedEncodingException {
         try(PrintWriter writer = new PrintWriter(new FileOutputStream(file, true))) {
             if(! first_line) {
                 writer.print("\n");
@@ -40,16 +37,17 @@ public class SaveLoad {
             }
             
             // Append the current generation at the end of the file
-            for(l = 0; l < nn.genomes_per_generation; l++) {
-                for(i = 0; i < nn.layers_amount - 1; i++) {
-                    for(j = 0; j < nn.neurons_amount[i]; j++) {
+            for(int l = 0; l < nn.genomes_per_generation; l++) {
+                for(int i = 0; i < nn.layers_amount - 1; i++) {
+                    for(int j = 0; j < nn.neurons_amount[i]; j++) {
+                        int m;
                         if(i + 1 != nn.layers_amount - 1) {
                             m = nn.neurons_amount[i + 1] - 1;
                         }
                         else {
                             m = nn.neurons_amount[i + 1];
                         }
-                        for(k = 0; k < m; k++) {
+                        for(int k = 0; k < m; k++) {
                             writer.print(nn.synapses[l][i][j][k] + " ");
                         }
                     }
@@ -58,7 +56,7 @@ public class SaveLoad {
         }
     }
     
-    public void loadFromFile() throws FileNotFoundException, IOException {
+    protected void loadFromFile() throws FileNotFoundException, IOException {
         String current_line, last_generation = null;
 
         BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -69,21 +67,21 @@ public class SaveLoad {
         }
         
         // Split the string and store the numbers (as text)
-        List<String> values = new ArrayList<String>();        
-        values = Arrays.asList(last_generation.trim().split(" "));
+        List<String> values = Arrays.asList(last_generation.trim().split(" "));
         
         // Init the synapsis
-        n = 0;
-        for(l = 0; l < nn.genomes_per_generation; l++) {
-            for(i = 0; i < nn.layers_amount - 1; i++) {
-                for(j = 0; j < nn.neurons_amount[i]; j++) {
+        int n = 0;
+        for(int l = 0; l < nn.genomes_per_generation; l++) {
+            for(int i = 0; i < nn.layers_amount - 1; i++) {
+                for(int j = 0; j < nn.neurons_amount[i]; j++) {
+                    int m;
                     if(i + 1 != nn.layers_amount - 1) {
                         m = nn.neurons_amount[i + 1] - 1;
                     }
                     else {
                         m = nn.neurons_amount[i + 1];
                     }
-                    for(k = 0; k < m; k++) {
+                    for(int k = 0; k < m; k++) {
                         nn.synapses[l][i][j][k] = Double.parseDouble(values.get(n));
                         n++;
                     }

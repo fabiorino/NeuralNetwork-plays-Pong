@@ -5,15 +5,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Ball extends Thread {
-    Pong game;
+    private final Pong game;
     
-    final int DIAMETER = 20;
+    protected final int DIAMETER = 20;
 
-    int x = Pong.WIDTH / 2 - DIAMETER / 2;
-    int y = Pong.HEIGHT / 2 - DIAMETER /2;
+    protected int x = Pong.WIDTH / 2 - DIAMETER / 2;
+    protected int y = Pong.HEIGHT / 2 - DIAMETER /2;
 
-    boolean going_up = true;
-    boolean going_right = false;
+    protected boolean going_up = true;
+    protected boolean going_right = false;
     
     public Ball(Pong game) {
         this.game = game;
@@ -38,7 +38,7 @@ public class Ball extends Thread {
         }
     }
     
-    public void move() throws InterruptedException {
+    private void move() throws InterruptedException {
         if(going_up) {
             if(y == 0) { // Bounce when it hits the top
                 going_up = false;
@@ -57,11 +57,11 @@ public class Ball extends Thread {
         }
         
         if(going_right) {
-            if(getBounds().intersects(game.panel.p2.getBounds())) { // Bounce when it hits the paddle 2 and update the score
+            if(getBounds().intersects(Pong.panel.p2.getBounds())) { // Bounce when it hits the paddle 2 and update the score
                 going_right = false;
                 
-                game.panel.p2.score++;
-                game.panel.score2.setText(Integer.toString(game.panel.p2.score));
+                Pong.panel.p2.score++;
+                Pong.panel.score2.setText(Integer.toString(Pong.panel.p2.score));
             }
             else {
                 x++;
@@ -72,11 +72,11 @@ public class Ball extends Thread {
             }
         }
         else {
-            if(getBounds().intersects(game.panel.p1.getBounds())) { // Bounce when it hits the paddle 1 and update the score
+            if(getBounds().intersects(Pong.panel.p1.getBounds())) { // Bounce when it hits the paddle 1 and update the score
                 going_right = true;
                 
-                game.panel.p1.score++;
-                game.panel.score1.setText(Integer.toString(game.panel.p1.score));
+                Pong.panel.p1.score++;
+                Pong.panel.score1.setText(Integer.toString(Pong.panel.p1.score));
             }
             else {
                 x--;
@@ -88,11 +88,11 @@ public class Ball extends Thread {
         }
     }
     
-    public Rectangle getBounds() {
+    protected Rectangle getBounds() {
         return new Rectangle(x, y, DIAMETER, DIAMETER);
     }
     
-    public void paint(Graphics2D g) {
+    protected void paint(Graphics2D g) {
         g.setColor(Color.DARK_GRAY);
         g.fillOval(x, y, DIAMETER, DIAMETER);
     }

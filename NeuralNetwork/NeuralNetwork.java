@@ -9,23 +9,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class NeuralNetwork {    
-    public int layers_amount;
-    public double fits[]; // [genome_index]
-    public int neurons_amount[]; // [layer_index]. Must be >= 2 (inputs and outputs). This is also used to calculate the synapses amount
-    public double inputs[];
-    public double neurons[][]; // [layer_index][neuron_index]
-    public double synapses[][][][]; // [genome_index][layer_index][neuron_index][synapses_index]
-    public int genomes_per_generation;
-    public int current_genome = 0;
-    public int current_generation = 0;
-    public double random_mutation_probability;
-    public double min_weight, max_weight;
+    protected int layers_amount;
+    private double fits[]; // [genome_index]
+    protected int neurons_amount[]; // [layer_index]. Must be >= 2 (inputs and outputs). This is also used to calculate the synapses amount
+    private double inputs[];
+    protected double neurons[][]; // [layer_index][neuron_index]
+    protected double synapses[][][][]; // [genome_index][layer_index][neuron_index][synapses_index]
+    protected int genomes_per_generation;
+    protected int current_genome = 0;
+    protected int current_generation = 0;
+    private double random_mutation_probability;
+    private double min_weight, max_weight;
     
-    public int i, j, k, l, m;
-    public Random r = new Random();
-    
-    public SaveLoad save_load;
-    public LiveView live_view;
+    private SaveLoad save_load;
+    private LiveView live_view;
     
     public NeuralNetwork(int neurons_amount[], int genomes_per_generation, double random_mutation_probability, double min_weight, double max_weight) {
         // Copy costructor parameters
@@ -42,7 +39,7 @@ public class NeuralNetwork {
 	
 	// Generate neurons
 	neurons = new double[layers_amount][];
-	for(i = 0; i < layers_amount; i++) {
+	for(int i = 0; i < layers_amount; i++) {
             if(i != layers_amount - 1) {
                 neurons_amount[i]++; // The last neuron is the bias.
             }
@@ -50,17 +47,17 @@ public class NeuralNetwork {
 	}
         
         // Set biases to 1
-	for(i = 0; i < layers_amount - 1; i++) {
+	for(int i = 0; i < layers_amount - 1; i++) {
             neurons[i][neurons_amount[i] - 1] = 1;
 	}
         
         // Generate synapses
 	synapses = new double[genomes_per_generation][][][];
-	for(k = 0; k < genomes_per_generation; k++) {
+	for(int k = 0; k < genomes_per_generation; k++) {
             synapses[k] = new double[layers_amount - 1][][];
-            for(i = 0; i < layers_amount - 1; i++) {
+            for(int i = 0; i < layers_amount - 1; i++) {
                 synapses[k][i] = new double[neurons_amount[i]][];
-                for(j = 0; j < neurons_amount[i]; j++) {
+                for(int j = 0; j < neurons_amount[i]; j++) {
                     if(i + 1 != layers_amount - 1) {
                         synapses[k][i][j] = new double[neurons_amount[i + 1] - 1];
                     }
@@ -88,17 +85,18 @@ public class NeuralNetwork {
         }
     }
     
-    public void initSynapsesRandomly() {
-        for(l = 0; l < genomes_per_generation; l++) {
-            for(i = 0; i < layers_amount - 1; i++) {
-                for(j = 0; j < neurons_amount[i]; j++) {
+    private void initSynapsesRandomly() {
+        for(int l = 0; l < genomes_per_generation; l++) {
+            for(int i = 0; i < layers_amount - 1; i++) {
+                for(int j = 0; j < neurons_amount[i]; j++) {
+                    int m;                    
                     if(i + 1 != layers_amount - 1) {
                         m = neurons_amount[i + 1] - 1;
                     }
                     else {
                         m = neurons_amount[i + 1];
                     }
-                    for(k = 0; k < m; k++) {
+                    for(int k = 0; k < m; k++) {
                         synapses[l][i][j][k] = randDouble(min_weight, max_weight);
                     }
                 }
@@ -139,11 +137,11 @@ public class NeuralNetwork {
         live_view.updateTitle();
     }
     
-    public void newGeneration() {
+    private void newGeneration() {
         boolean no_progress = true;
 	
 	// Check if the NN made any progress
-	for(i = 0; i < genomes_per_generation; i++) {
+	for(int i = 0; i < genomes_per_generation; i++) {
             if(fits[i] != 0) {
                 no_progress = false;
                 break;
@@ -160,13 +158,13 @@ public class NeuralNetwork {
 	current_generation++;
     }
     
-    public void crossover() {
+    private void crossover() {
         // Sort
 	int j_max;
 	double fit_temp, synapses_temp[][][];
-	for(i = 0; i < genomes_per_generation - 1; i++) {
+	for(int i = 0; i < genomes_per_generation - 1; i++) {
             j_max = i;
-            for(j = i + 1; j < genomes_per_generation; j++) {
+            for(int j = i + 1; j < genomes_per_generation; j++) {
                 if(fits[j] > fits[j_max]) {
                     j_max = j;
                 }
@@ -183,16 +181,17 @@ public class NeuralNetwork {
 	
 	// The best genome is now the first. We mix it with all the other genomes
 	double prob_rand;
-	for(l = 1; l < genomes_per_generation; l++) {
-            for(i = 0; i < layers_amount - 1; i++) {
-                for(j = 0; j < neurons_amount[i]; j++) {
+	for(int l = 1; l < genomes_per_generation; l++) {
+            for(int i = 0; i < layers_amount - 1; i++) {
+                for(int j = 0; j < neurons_amount[i]; j++) {
+                    int m;
                     if(i + 1 != layers_amount - 1) {
                         m = neurons_amount[i + 1] - 1;
                     }
                     else {
                         m = neurons_amount[i + 1];
                     }
-                    for(k = 0; k < m; k++) {
+                    for(int k = 0; k < m; k++) {
                         // If this genome made any progress, mix it with the first genome or generate a new number randomly or keep the current value
                         if(fits[l] != 0) {
                             prob_rand = randDouble(0, 1);
@@ -230,35 +229,37 @@ public class NeuralNetwork {
         }
     }
     
-    public void setNeuronsValues() {
+    private void setNeuronsValues() {
         // Copy inputs
-	for(i = 0; i < neurons_amount[0] - 1; i++) {
+	for(int i = 0; i < neurons_amount[0] - 1; i++) {
             neurons[0][i] = inputs[i];
 	}
 	
 	// Init the other neurons to 0
-	for(i = 1; i < layers_amount; i++) {
+	for(int i = 1; i < layers_amount; i++) {
+            int m;
             if(i + 1 != layers_amount) {
                 m = neurons_amount[i] - 1;
             }
             else {
                 m = neurons_amount[i];
             }
-            for(j = 0; j < m; j++) {
+            for(int j = 0; j < m; j++) {
                 neurons[i][j] = 0;
             }
 	}
 	
 	// Multiply neurons and synapses and sum the results (calculate the next neurons values)
-	for(i = 1; i < layers_amount; i++) {
+	for(int i = 1; i < layers_amount; i++) {
+            int m;
             if(i != layers_amount - 1) {
                 m = neurons_amount[i] - 1;
             }
             else {
                 m = neurons_amount[i];
             }
-            for(j = 0; j < m; j++) {
-                for(k = 0; k < neurons_amount[i - 1]; k++) {
+            for(int j = 0; j < m; j++) {
+                for(int k = 0; k < neurons_amount[i - 1]; k++) {
                     neurons[i][j] += neurons[i - 1][k] * synapses[current_genome][i - 1][k][j];
                 }
 
@@ -270,11 +271,12 @@ public class NeuralNetwork {
         live_view.panel.repaint();
     }
     
-    public double sigmoid(double x) {
+    private double sigmoid(double x) {
         return 1 / (1 + exp(-x));
     }
     
-    public double randDouble(double min, double max) {
+    private double randDouble(double min, double max) {
+        Random r = new Random();
         return min + (max - min) * r.nextDouble();
     }
 }

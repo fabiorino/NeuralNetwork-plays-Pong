@@ -5,18 +5,14 @@ import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class Panel extends JPanel {
-    final Pong game;
+public class Panel extends JPanel {    
+    protected Paddle p1;
+    protected Paddle p2;
+    protected Ball ball;
     
-    Paddle p1;
-    Paddle p2;
-    Ball ball;
+    protected JLabel score1 = new JLabel("0"), score2 = new JLabel("0");
     
-    JLabel score1 = new JLabel("0"), score2 = new JLabel("0");
-    
-    public Panel(final Pong game) {
-        this.game = game;
-        
+    public Panel(final Pong game) {        
         setFocusable(true);
         
         p1 = new Paddle(10, Pong.HEIGHT / 2 - Paddle.HEIGHT / 2);
@@ -56,12 +52,7 @@ public class Panel extends JPanel {
             @Override
             public void keyPressed(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_SPACE) {
-                    if(game.autoplay) {
-                        game.autoplay = false;
-                    }
-                    else {
-                        game.autoplay = true;
-                    }
+                    game.autoplay = !game.autoplay;
                 }
             }
             

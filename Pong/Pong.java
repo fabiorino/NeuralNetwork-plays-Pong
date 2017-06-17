@@ -6,18 +6,18 @@ import java.awt.*;
 import javax.swing.*;
 
 public class Pong {
-    static final int WIDTH = 640;
-    static final int HEIGHT = 400;
-    static JFrame frame;
-    static Panel panel;
+    protected static final int WIDTH = 640;
+    protected static final int HEIGHT = 400;
+    protected static JFrame frame;
+    protected static Panel panel;
     
     // Setup neural network
-    final int genomes_per_generation = 3;
-    int neurons_amount[] = {2, 2, 1};
-    NeuralNetwork nn = new NeuralNetwork(neurons_amount, genomes_per_generation, 0.5, -1, 1);
-    boolean autoplay = true;
-    double inputs[] = new double[2];
-    double outputs[] = new double[1];
+    private final int genomes_per_generation = 3;
+    private final int neurons_amount[] = {2, 2, 1};
+    private final NeuralNetwork nn = new NeuralNetwork(neurons_amount, genomes_per_generation, 0.5, -1, 1);
+    protected boolean autoplay = true;
+    private final double inputs[] = new double[2];
+    private double outputs[] = new double[1];
     
     public static void main(String[] args) {
         new Pong();
@@ -36,7 +36,7 @@ public class Pong {
         frame.setVisible(true);
     }
     
-    public void learn() {        
+    protected void learn() {        
         // Bot
         if(autoplay) {
             if(panel.ball.y > panel.p2.y) {
@@ -61,7 +61,7 @@ public class Pong {
         }
     }
     
-    public void gameOver() throws InterruptedException {
+    protected void gameOver() throws InterruptedException {
         // Get the fitness of the current genome, then create a new genome
         nn.newGenome(panel.p1.score);
         
