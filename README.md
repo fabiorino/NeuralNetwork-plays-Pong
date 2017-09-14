@@ -31,7 +31,7 @@ I have used Netbeans to compile the whole project. [Download Netbeans](https://n
 ### Packages and files
 **Pong**
 * `Pong.java`: contains the main function. Here is where both the Neural Network and the game are initialized. Also, here is where the outputs of the Neural Network are computed and "converted" into an action.
-* `Panel.java`: all the graphics of the game are rendered here. Also, it contains the keyboard listeners.
+* `Panel.java`: the graphics of the game is rendered here. Also, it contains the keyboard listeners.
 * `Paddle.java`: the source code to move the left and the right paddles.
 * `Ball.java`: the source code to move the ball and repaint the panel. Also, here is where the collisions between the ball and the borders/paddles are handled and the scores are updated.
 
